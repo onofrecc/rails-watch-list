@@ -1,0 +1,7 @@
+<h1>Bookmarks</h1>
+<ul>
+  <% @bookmarks.each do |bookmark| %>
+    <li><%= link_to bookmark.name, list_path(list.id) %></li>
+  <% end %>
+</ul>
+<p><%= link_to "Create a new list", new_list_path %>
