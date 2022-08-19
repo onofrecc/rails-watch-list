@@ -11,9 +11,8 @@ class BookmarksController < ApplicationController
   def create
     @list = List.find(params[:list_id])
     @bookmark = Bookmark.new(bookmark_params)
-    # @bookmark.movie = @bookmark
-    @bookmark.save
-    # raise
+    @bookmark.list = @list
+    @bookmark.save!
     redirect_to list_path(@list)
   end
 
@@ -21,22 +20,25 @@ class BookmarksController < ApplicationController
     # @list = List.find(params[:list_id])
     @bookmark = Bookmark.find(params[:id])
     @bookmark.destroy
-    # redirect_to
+    redirect_to list_path(@bookmark.list), status: :see_other
   end
 
   private
 
   def bookmark_params
-    params.require(:bookmark).permit(:comment)
+    params.require(:bookmark).permit(:comment, :movie_id)
   end
 end
 
 
 
-class ReviewsController < ApplicationController
-  def destroy
-    @review = Review.find(params[:id])
-    @review.destroy
-    redirect_to restaurant_path(@review.restaurant), status: :see_other
-  end
-end
+
+
+# # app/controllers/reviews_controller.rb
+# class ReviewsController < ApplicationController
+#   def destroy
+#     @review = Review.find(params[:id])
+#     @review.destroy
+#     redirect_to restaurant_path(@review.restaurant), status: :see_other
+#   end
+# end
